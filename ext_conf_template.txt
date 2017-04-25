@@ -1,0 +1,5 @@
+# cat=basic/enable; type=string; label=Path to configuration file
+configFile = typo3conf/custom_error_conf.yml
+
+# cat=basic; type=boolean; label=Disable usage of proxy server
+disableProxyUsage = 0

@@ -1,0 +1,14 @@
+*.save
+*.log
+.idea
+.DS_Store
+._*
+*~
+*.bak
+*.project
+*.swp
+.buildpath
+.cache
+.project
+.session
+.settings

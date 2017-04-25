@@ -1,0 +1,29 @@
+configuration: &default
+  name: www.vansales.de
+  pages:
+    404:  6
+    503:  7
+  language-pattern:
+    default: true
+  additional-tlds: false
+  https: false
+
+
+404: &404
+  - domain:
+      <<: *default
+      additional-tlds:
+      - tld: .omi
+      - tld: .dev
+
+  - domain:
+      <<: *default
+      name: preview.vansales.de
+
+  - domain:
+      <<: *default
+      name: w3.vansales.de
+
+
+503: &503
+  <<: *404
