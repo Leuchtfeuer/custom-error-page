@@ -9,5 +9,3 @@ There are up to three steps to take:
 
 - Change the value of [FE][pageNotFound_handling] to "USER_FUNCTION:Bitmotion\CustomErrorPage\Utility\CustomErrorPageUtility->showCustom404Page" (without "")
 - Change the value of [FE][pageUnavailable_handling] to "USER_FUNCTION:Bitmotion\CustomErrorPage\Utility\CustomErrorPageUtility->showCustom503Page" (without "")
-
-- OPTIONAL: If you use a proxy: Set the constant disableProxyUsage in the Extension Configuration to 1

@@ -71,9 +71,6 @@ class CustomErrorPageUtility
             $configuration = ConfigurationUtility::loadConfiguration($pageType);
             $str404Page = $this->find404Page($currentUrl, $configuration, $pageType);
 
-            // Check if proxy usage is configured
-            $this->checkForProxyUsage();
-
             // The errors of GeneralUtility::getUrl gets stored in this variable
             $report = '';
 
@@ -126,17 +123,5 @@ class CustomErrorPageUtility
 
         // throw an exception if no matching regular expression can be found
         throw new \Exception('Could not find a "pageNotFound" match for the given URL');
-    }
-
-    /**
-     * This method checks if the TYPO3 is using a proxy server to connect to the internet.
-     */
-    private function checkForProxyUsage()
-    {
-        $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
-
-        if (is_array($settings) && $settings['disableProxyUsage']) {
-            $GLOBALS['TYPO3_CONF_VARS']['SYS']['curlProxyServer'] = '';
-        }
     }
 }
