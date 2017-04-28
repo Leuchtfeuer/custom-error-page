@@ -69,15 +69,16 @@ class ConfigurationUtility
         $isFirst = true;
         $arrayKey = $page . 'Handling';
 
-        $protocol = $configuration['configuration']['https'] === true ? 'https' : 'http';
-        $pageUid = $configuration['configuration']['pages'][$page];
+        foreach ($configuration[$page] as $pageConfiguration) {
 
-        foreach ($configuration[$page] as $pageNotFoundConfiguration) {
+            $domain = $pageConfiguration['domain'];
+            $protocol = $domain['https'] === true ? 'https' : 'http';
+            $pageUid = $domain['pages'][$page];
+            $domainNames = [$domain['name']];
 
-            $domainNames = [$pageNotFoundConfiguration['domain']['name']];
-            if ($pageNotFoundConfiguration['domain']['additional-tlds'] !== false && is_array($pageNotFoundConfiguration['domain']['additional-tlds'])) {
-                foreach ($pageNotFoundConfiguration['domain']['additional-tlds'] as $tld) {
-                    $domainNames[] = $pageNotFoundConfiguration['domain']['name'] . $tld['tld'];
+            if ($domain['additional-tlds'] !== false && is_array($domain['additional-tlds'])) {
+                foreach ($domain['additional-tlds'] as $tld) {
+                    $domainNames[] = $domain['name'] . $tld['tld'];
                 }
             }
 
@@ -87,7 +88,7 @@ class ConfigurationUtility
                     $arrayKey => [],
                 ];
 
-                foreach ($pageNotFoundConfiguration['domain']['language-pattern'] as $languageKey => $languageUid) {
+                foreach ($domain['language-pattern'] as $languageKey => $languageUid) {
                     if ($languageKey === 'default' && $languageKey == true) {
                         $defaultConfiguration[$arrayKey]['|.*|'] = $baseUrl;
                     } else {
