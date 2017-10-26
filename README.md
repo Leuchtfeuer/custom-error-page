@@ -1,4 +1,4 @@
-This version of the custom_error_page can only be used in >= TYPO3 8 LTS.
+This version of the custom_error_page can only be used in >= TYPO3 7 LTS.
 
 ## How to use
 
