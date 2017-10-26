@@ -42,7 +42,7 @@ class CustomErrorPageUtility
      */
     public function showCustom404Page($param, $ref)
     {
-        $this->showCustomPage($param['currentUrl'], 404);
+        $this->showCustomErrorPage($param['currentUrl'], 404);
     }
     /**
      * user func for page not found function
@@ -52,7 +52,7 @@ class CustomErrorPageUtility
      */
     public function showCustom503Page($param, $ref)
     {
-        $this->showCustomPage($param['currentUrl'], 503);
+        $this->showCustomErrorPage($param['currentUrl'], 503);
     }
 
     /**
@@ -60,7 +60,7 @@ class CustomErrorPageUtility
      * @param int $pageType
      * @throws \Exception
      */
-    private function showCustomPage($currentUrl, $pageType)
+    private function showCustomErrorPage($currentUrl, $pageType)
     {
         $strOriginalRequestUserAgent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
 
@@ -69,7 +69,7 @@ class CustomErrorPageUtility
 
             $strOriginalRequestIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
             $configuration = ConfigurationUtility::loadConfiguration($pageType);
-            $str404Page = $this->find404Page($currentUrl, $configuration, $pageType);
+            $str404Page = $this->findErrorPage($currentUrl, $configuration, $pageType);
 
             // The errors of GeneralUtility::getUrl gets stored in this variable
             $report = '';
@@ -99,7 +99,7 @@ class CustomErrorPageUtility
      * @return mixed
      * @throws \Exception
      */
-    private function find404Page($strCurrentUrl, $configuration, $type = 404)
+    private function findErrorPage($strCurrentUrl, $configuration, $type = 404)
     {
         $arrayKey = $type . 'Handling';
         $strHostName = GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
