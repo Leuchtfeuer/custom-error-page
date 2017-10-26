@@ -1,19 +1,23 @@
 configuration: &default
   name: www.domain.tld
   pages:
-    404:  6
-    503:  7
+    404:  29
+    503:  12
   language-pattern:
     default: true
-  additional-tlds: false
-  https: false
+    en: 0
+    de: 1
+    fr: 2
+  additional-tlds:
+    - tld: .foo
+    - tld: .bar
+    - tld: .foo.bar
+  https: true
 
 
 404: &404
   - domain:
       <<: *default
-      additional-tlds:
-      - tld: .omi
 
   - domain:
       <<: *default

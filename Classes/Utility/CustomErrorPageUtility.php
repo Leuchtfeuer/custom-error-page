@@ -5,7 +5,7 @@ namespace Bitmotion\CustomErrorPage\Utility;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Bitmotion GmbH <typo3-ext@bitmotion.de>
+ *  (c) 2017 Bitmotion GmbH <typo3-ext@bitmotion.de>
  *
  *  All rights reserved
  *
