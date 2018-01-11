@@ -115,7 +115,7 @@ class CustomErrorPageUtility
         if (strpos($strOriginalRequestUserAgent, 'TYPO3/' . $pageType. '-Handling') === false) {
 
             $strOriginalRequestIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
-            $report = '';
+            $report = [];
             $errorUrl = $this->getConfigurationErrorPage($currentUrl, $pageType);
 
             // Call the website. cURL is needed for this.
