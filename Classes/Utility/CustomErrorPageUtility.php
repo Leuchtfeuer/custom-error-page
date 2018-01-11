@@ -72,7 +72,7 @@ class CustomErrorPageUtility
             $str404Page = $this->findErrorPage($currentUrl, $configuration, $pageType);
 
             // The errors of GeneralUtility::getUrl gets stored in this variable
-            $report = '';
+            $report = [];
 
             // Call the website. cURL is needed for this.
             $strPageContent = GeneralUtility::getUrl($str404Page, 0, [
