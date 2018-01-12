@@ -35,12 +35,12 @@ class ConfigurationUtility
 {
     /**
      * @param int $page
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public static function loadConfiguration($page = 404)
     {
-
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
 
         if (!isset($extConf['configFile']) || empty($extConf['configFile'])) {
@@ -59,6 +59,7 @@ class ConfigurationUtility
     /**
      * @param string $fileName
      * @param int $page
+     *
      * @return array
      */
     private static function loadConfigurationFromYaml($fileName, $page)
