@@ -1,4 +1,4 @@
-This version of the custom_error_page can only be used in >= TYPO3 7 LTS.
+This version of the custom_error_page can only be used by >= TYPO3 7 LTS instances running in composer mode.
 
 ## How to use
 
