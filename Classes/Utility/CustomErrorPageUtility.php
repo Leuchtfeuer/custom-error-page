@@ -47,6 +47,7 @@ class CustomErrorPageUtility
      */
     public function showCustom404Page($param, $ref)
     {
+        $this->checkComposerMode();
         $pageType = $this->getErrorPageType($param);
         //TYPO3 handles 403 and 404 HTTP Requests in the same way and we want to separate them
         if ($pageType === self::CODE_403) {
@@ -67,6 +68,7 @@ class CustomErrorPageUtility
      */
     public function showCustom503Page($param, $ref)
     {
+        $this->checkComposerMode();
         $this->showCustomErrorPage($param['currentUrl'], self::CODE_503);
     }
 
@@ -181,5 +183,17 @@ class CustomErrorPageUtility
 
         // throw an exception if no matching regular expression can be found
         throw new \Exception('Could not find a "pageNotFound" match for the given URL');
+    }
+
+    /**
+     * Checks whether TYPO3 runs in composer mode or not
+     *
+     * @throws \Exception
+     */
+    private function checkComposerMode()
+    {
+        if (!defined(TYPO3_COMPOSER_MODE) || TYPO3_COMPOSER_MODE === false) {
+            throw new \Exception('TYPO3 has to run in composer mode.', 1515741559);
+        }
     }
 }

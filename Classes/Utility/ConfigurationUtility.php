@@ -1,4 +1,5 @@
 <?php
+
 namespace Bitmotion\CustomErrorPage\Utility;
 
 /***************************************************************
