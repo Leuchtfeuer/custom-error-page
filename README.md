@@ -4,7 +4,7 @@ This version of the custom_error_page can only be used by >= TYPO3 7 LTS instanc
 
 There are up to three steps to take:
 
-- Set up the YAML with all your domains for each page root tree and their pids to their specific 404/503 page. An example
+- Set up the YAML with all your domains for each page root tree and their pids to their specific 403/404/503 page. An example
   file is in the folder "Examples" of this extension. The default file destination is "typo3conf/custom_error_conf.yml".
 
 - Change the value of [FE][pageNotFound_handling] to "USER_FUNCTION:Bitmotion\CustomErrorPage\Utility\CustomErrorPageUtility->showCustom404Page" (without "")
@@ -21,6 +21,7 @@ Full example:
 configuration: &default
   name: www.domain.tld
   pages:
+    403:  28
     404:  29
     503:  12
   language-pattern:
@@ -39,12 +40,15 @@ configuration: &default
   - domain:
       <<: *default
 
+403: &403
+  <<: *404
+
 503: &503
   <<: *404
 ```
 
-### 404 / 503
-Contains the configuration array for handling 404 or 503 errors. Both keys contain an array of domains which does have the following configuration possibilities:
+### 403 / 404 / 503
+Contains the configuration array for handling 403, 404 or 503 errors. All keys contain an array of domains which does have the following configuration possibilities:
 
 + <code>name</code> (string): The full name of the domain
 + <code>https</code> (bool): True if SSL is used
@@ -55,6 +59,7 @@ Contains the configuration array for handling 404 or 503 errors. Both keys conta
 #### pages
 The pages array does have to options:
 
++ <code>403</code> (int): The ID of the page which should be shown when an 403 error occurs
 + <code>404</code> (int): The ID of the page which should be shown when an 404 error occurs
 + <code>503</code> (int): The ID of the page which should be shown when an 503 error occurs
 
