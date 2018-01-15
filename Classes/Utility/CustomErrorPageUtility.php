@@ -192,7 +192,7 @@ class CustomErrorPageUtility
      */
     private function checkComposerMode()
     {
-        if (!defined(TYPO3_COMPOSER_MODE) || TYPO3_COMPOSER_MODE === false) {
+        if (!defined('TYPO3_COMPOSER_MODE') || TYPO3_COMPOSER_MODE === false) {
             throw new \Exception('TYPO3 has to run in composer mode.', 1515741559);
         }
     }
