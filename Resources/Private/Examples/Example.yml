@@ -1,6 +1,7 @@
 configuration: &default
   name: www.domain.tld
   pages:
+    403:  28
     404:  29
     503:  12
   language-pattern:
@@ -32,6 +33,8 @@ configuration: &default
         es: 2
         fr: 3
 
+403: &403
+  <<: *404
 
 503: &503
   <<: *404
