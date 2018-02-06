@@ -28,9 +28,9 @@ Full example:
 configuration: &default
   name: www.domain.tld
   pages:
-    403:  28
-    404:  29
-    503:  12
+    403:  89
+    404:  12
+    503:  29
   language-pattern:
     default: true
     en: 0
