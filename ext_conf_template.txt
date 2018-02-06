@@ -1,5 +1,5 @@
 # cat=basic/enable; type=string; label=Path to configuration file
 configFile = typo3conf/custom_error_conf.yml
 
-# cat=basic/enable; type=boolean; label=Force 404 on 403 error
+# cat=basic/enable; type=boolean; label=Show 404 page on 403 error
 force404 = 0
