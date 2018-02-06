@@ -11,10 +11,10 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '1.0.3-dev',
+    'version' => '1.1.0-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '7.6.0-9.1.99',
+            'typo3' => '8.7.0-9.1.99',
         ],
         'conflicts' => [],
         'suggests' => [],
@@ -23,8 +23,5 @@ $EM_CONF[$_EXTKEY] = [
         'psr-4' => [
             'Bitmotion\\CustomErrorPage\\' => 'Classes'
         ],
-        'classmap' => [
-            'Resources/Private/PHP',
-        ]
     ],
 ];

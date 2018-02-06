@@ -61,14 +61,9 @@ class ConfigurationUtility
      * @param int $page
      *
      * @return array
-     * @throws \Exception
      */
     private static function loadConfigurationFromYaml($fileName, $page)
     {
-        if (!class_exists(Yaml::class)) {
-            throw new \Exception('Symfony Yaml parser is required.', 1515741559);
-        }
-
         $yamlParser = new Yaml();
         $configuration = $yamlParser->parse(file_get_contents($fileName));
 
