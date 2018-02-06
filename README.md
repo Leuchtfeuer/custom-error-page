@@ -13,7 +13,14 @@ There are up to three steps to take:
 There is a configuration example in <code>Resources/Private/Examples</code>.
 
 
-## Configuration
+## Extension Configuration
+
+There are to configuration options.
+
+* <code>basic.path</code> (string): Path to the YAML file containing the configuration (see: below).
+* <code>basic.force404</code> (bool): If set, the configured 404 page will shown on 403 errors.
+
+## Configuration File
 
 Full example:
 
