@@ -47,12 +47,10 @@ class CustomErrorPageUtility
      */
     public function showCustom404Page($param, $ref)
     {
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
-        $force404 = (bool)$extConf['force404'];
         $pageType = $this->getErrorPageType($param);
 
         // TYPO3 handles 403 and 404 HTTP Requests in the same way and we want to separate them
-        if ($pageType === self::CODE_403 && $force404 === false) {
+        if ($pageType === self::CODE_403) {
             $error403Url = $this->getConfigurationErrorPage($param['currentUrl'], $pageType);
 
             //Redirect user to the configured 403 page
@@ -81,7 +79,10 @@ class CustomErrorPageUtility
      */
     protected function getErrorPageType($param)
     {
-        if (isset($param['pageAccessFailureReasons']) && isset($param['pageAccessFailureReasons']['fe_group'])) {
+        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
+        $force404 = (bool)$extConf['force404'];
+
+        if (!$force404 && isset($param['pageAccessFailureReasons']) && isset($param['pageAccessFailureReasons']['fe_group'])) {
             return $this->hasUserGroups($param['pageAccessFailureReasons']['fe_group']) ? self::CODE_403 : self::CODE_404;
         }
 
