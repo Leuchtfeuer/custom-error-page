@@ -23,5 +23,8 @@ $EM_CONF[$_EXTKEY] = [
         'psr-4' => [
             'Bitmotion\\CustomErrorPage\\' => 'Classes'
         ],
+        'classmap' => [
+            'Resources/Private/PHP',
+        ]
     ],
 ];
