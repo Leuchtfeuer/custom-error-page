@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Custom Error Pages',
-    'description' => 'Shows custom 404/503 pages depending on domain/language/current tree...',
+    'description' => 'Shows custom 403/404/503 pages depending on domain/language/current tree...',
     'category' => 'system',
     'author' => 'Bitmotion GmbH',
     'author_email' => 'typo3-ext@bitmotion.de',
