@@ -44,7 +44,7 @@ class ConfigurationUtility
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
 
         if (!isset($extConf['configFile']) || empty($extConf['configFile'])) {
-            throw new \Exception('No custom_error_page configuration File configured', 1493046456);
+            throw new \Exception('No custom_error_page configuration file configured', 1493046456);
         }
 
         $fileName = PATH_site . trim($extConf['configFile']);
