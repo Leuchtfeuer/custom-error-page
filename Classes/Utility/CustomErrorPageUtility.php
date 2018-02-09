@@ -156,12 +156,14 @@ class CustomErrorPageUtility
      * This method checks if the current url matches any of the configured regular expressions and return the
      * corresponding page if so.
      *
-     * @param $strCurrentUrl
+     * @param string $currentUrl
+     * @param array $configuration
+     * @param int $type
      *
      * @return mixed
      * @throws \Exception
      */
-    private function findErrorPage($strCurrentUrl, $configuration, $type = self::CODE_404)
+    private function findErrorPage($currentUrl, $configuration, $type = self::CODE_404)
     {
         $arrayKey = $type . 'Handling';
         $strHostName = GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
@@ -178,7 +180,7 @@ class CustomErrorPageUtility
         }
 
         foreach ($strPageNotFoundAllocationArray as $strRegex => $strPage) {
-            if (preg_match($strRegex, $strCurrentUrl)) {
+            if (preg_match($strRegex, $currentUrl)) {
                 return $strPage;
             }
         }
