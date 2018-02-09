@@ -107,38 +107,6 @@ class CustomErrorPageUtility
     }
 
     /**
-     * @param string $currentUrl
-     * @param int $pageType
-     * @throws \Exception
-     */
-    private function showCustomErrorPage($currentUrl, $pageType)
-    {
-        $strOriginalRequestUserAgent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
-
-        // if the current request contains our User-Agent, our extensions was called while trying to retrieve the 404 page => invalid configuration
-        if (strpos($strOriginalRequestUserAgent, 'TYPO3/' . $pageType. '-Handling') === false) {
-
-            $strOriginalRequestIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
-            $report = [];
-            $errorUrl = $this->getConfigurationErrorPage($currentUrl, $pageType);
-
-            // Call the website. cURL is needed for this.
-            $strPageContent = GeneralUtility::getUrl($errorUrl, 0, [
-                'User-Agent: TYPO3/' . $pageType . '-Handling::' . $strOriginalRequestIp . '::' . $strOriginalRequestUserAgent,
-                'Referer: ' . $currentUrl,
-            ], $report);
-
-            if (($strPageContent === '') || !$strPageContent) {
-                // if the request is emtpy or FALSE we were likely calling our self, thus we should prevent an infinite 404 call and throw an Exception instead
-                // @TODO try using the last config (wildcard) first
-                throw new \Exception($report['lib'] . ': ' . $report['message']);
-            } else {
-                echo $strPageContent;
-            }
-        }
-    }
-
-    /**
      * Get a url of the error page specified by currentUrl and the pageType(status code)
      *
      * @param string $currentUrl
@@ -166,26 +134,58 @@ class CustomErrorPageUtility
     private function findErrorPage($currentUrl, $configuration, $type = self::CODE_404)
     {
         $arrayKey = $type . 'Handling';
-        $strHostName = GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
+        $hostName = GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
 
-        if (is_array($configuration[$strHostName][$arrayKey])) {
-            $strPageNotFoundAllocationArray = $configuration[$strHostName][$arrayKey];
+        if (is_array($configuration[$hostName][$arrayKey])) {
+            $configurationAllocations = $configuration[$hostName][$arrayKey];
         } elseif (is_array($configuration['_DEFAULT'][$arrayKey])) {
-            $strPageNotFoundAllocationArray = $configuration['_DEFAULT'][$arrayKey];
+            $configurationAllocations = $configuration['_DEFAULT'][$arrayKey];
         }
 
-        if (empty($strPageNotFoundAllocationArray)) {
+        if (empty($configurationAllocations)) {
             // throw an exception if no configuration can be found
             throw new \Exception('Could not find a "pageNotFound" that belongs to this hostname. Not even a default configuration.');
         }
 
-        foreach ($strPageNotFoundAllocationArray as $strRegex => $strPage) {
-            if (preg_match($strRegex, $currentUrl)) {
-                return $strPage;
+        foreach ($configurationAllocations as $regex => $pageUid) {
+            if (preg_match($regex, $currentUrl)) {
+                return $pageUid;
             }
         }
 
         // throw an exception if no matching regular expression can be found
         throw new \Exception('Could not find a "pageNotFound" match for the given URL');
+    }
+
+    /**
+     * @param string $currentUrl
+     * @param int $pageType
+     * @throws \Exception
+     */
+    private function showCustomErrorPage($currentUrl, $pageType)
+    {
+        $originalRequestUserAgent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
+
+        // if the current request contains our User-Agent, our extensions was called while trying to retrieve the 404 page => invalid configuration
+        if (strpos($originalRequestUserAgent, 'TYPO3/' . $pageType . '-Handling') === false) {
+
+            $originalRequestIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
+            $report = [];
+            $errorUrl = $this->getConfigurationErrorPage($currentUrl, $pageType);
+
+            // Call the website. cURL is needed for this.
+            $pageContent = GeneralUtility::getUrl($errorUrl, 0, [
+                'User-Agent: TYPO3/' . $pageType . '-Handling::' . $originalRequestIp . '::' . $originalRequestUserAgent,
+                'Referer: ' . $currentUrl,
+            ], $report);
+
+            if (($pageContent === '') || !$pageContent) {
+                // if the request is emtpy or FALSE we were likely calling our self, thus we should prevent an infinite 404 call and throw an Exception instead
+                // @TODO try using the last config (wildcard) first
+                throw new \Exception($report['lib'] . ': ' . $report['message']);
+            } else {
+                echo $pageContent;
+            }
+        }
     }
 }
