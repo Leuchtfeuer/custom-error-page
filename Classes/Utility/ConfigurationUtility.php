@@ -87,29 +87,29 @@ class ConfigurationUtility
             foreach ($domainNames as $domainName) {
                 $prependDefault = false;
                 $baseUrl = $protocol . '://' . $domainName . '/index.php?id=' . $pageUid;
-                $defaultConfiguration = [
+                $domainConfiguration = [
                     $arrayKey => [],
                 ];
 
                 foreach ($domain['language-pattern'] as $languageKey => $languageUid) {
-                    if ($languageKey === 'default' && $languageKey == true) {
+                    if ($languageKey === 'default' && $languageUid == true) {
                         // Always prepend default configuration
                         $prependDefault = true;
                     } else {
                         $pattern = '|^/' . $languageKey . '/*|';
-                        $defaultConfiguration[$arrayKey][$pattern] = $baseUrl . '&L=' . $languageUid;
+                        $domainConfiguration[$arrayKey][$pattern] = $baseUrl . '&L=' . $languageUid;
                     }
                 }
 
                 // Prepend default configuration
                 if ($prependDefault === true) {
-                    $defaultConfiguration[$arrayKey]['|.*|'] = $baseUrl;
+                    $domainConfiguration[$arrayKey]['|.*|'] = $baseUrl;
                 }
 
-                $configurationArray[$domainName] = $defaultConfiguration;
+                $configurationArray[$domainName] = $domainConfiguration;
 
                 if ($isFirst === true) {
-                    $configuration['_DEFAULT'] = $defaultConfiguration;
+                    $configuration['_DEFAULT'] = $domainConfiguration;
                     $isFirst = false;
                 }
             }
