@@ -98,7 +98,7 @@ class CustomErrorPageUtility
     protected function hasUserGroups($feGroups)
     {
         foreach ($feGroups as $pageUid => $requiredUserGroup) {
-            if ($requiredUserGroup > 0) {
+            if (!empty($requiredUserGroup)) {
                 return true;
             }
         }
