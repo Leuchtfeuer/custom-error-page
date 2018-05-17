@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Class Custom404PageUtility
+ * Class CustomErrorPageUtility
  * @package Bitmotion\CustomErrorPage\Utility
  */
 class CustomErrorPageUtility
@@ -44,6 +44,8 @@ class CustomErrorPageUtility
      *
      * @param array $param
      * @param TypoScriptFrontendController $ref
+     *
+     * @throws \Exception
      */
     public function showCustom404Page($param, $ref)
     {
@@ -65,6 +67,8 @@ class CustomErrorPageUtility
      *
      * @param array $param
      * @param TypoScriptFrontendController $ref
+     *
+     * @throws \Exception
      */
     public function showCustom503Page($param, $ref)
     {
@@ -111,7 +115,9 @@ class CustomErrorPageUtility
      *
      * @param string $currentUrl
      * @param int $pageType
+     *
      * @return string
+     * @throws \Exception
      */
     protected function getConfigurationErrorPage($currentUrl, $pageType)
     {
