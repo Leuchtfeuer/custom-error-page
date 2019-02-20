@@ -26,6 +26,8 @@ namespace Bitmotion\CustomErrorPage\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use Symfony\Component\Yaml\Yaml;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ConfigurationUtility
@@ -33,6 +35,13 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ConfigurationUtility
 {
+    protected $logger;
+
+    public function __construct()
+    {
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+    }
+
     /**
      * @param int $page
      * @throws \Exception

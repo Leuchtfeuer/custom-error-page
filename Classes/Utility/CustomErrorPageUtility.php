@@ -25,7 +25,9 @@ namespace Bitmotion\CustomErrorPage\Utility;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
+
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -38,6 +40,13 @@ class CustomErrorPageUtility
     const CODE_404 = 404;
     const CODE_403 = 403;
     const CODE_503 = 503;
+
+    protected $logger;
+
+    public function __construct()
+    {
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+    }
 
     /**
      * user func for page not found function
@@ -185,13 +194,16 @@ class CustomErrorPageUtility
                 'Referer: ' . $currentUrl,
             ], $report);
 
-            if (($pageContent === '') || !$pageContent) {
-                // if the request is emtpy or FALSE we were likely calling our self, thus we should prevent an infinite 404 call and throw an Exception instead
+            if ($pageContent === '' || !$pageContent) {
+                // if the request is empty or FALSE we were likely calling our self, thus we should prevent an infinite 404 call and throw an Exception instead
                 // @TODO try using the last config (wildcard) first
-                throw new \Exception($report['lib'] . ': ' . $report['message']);
-            } else {
-                echo $pageContent;
+
+                $message = sprintf('%s: %s', $report['lib'], $report['message']);
+                $this->logger->critical($message);
+                throw new \Exception($message);
             }
+
+            echo $pageContent;
         }
     }
 }
