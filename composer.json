@@ -1,6 +1,6 @@
 {
   "name": "bitmotion/custom-error-page",
-  "description": "Shows custom 404/503 page depending on domain/language/current tree...",
+  "description": "Shows custom 403/404/503 page depending on domain/language/current tree...",
   "type": "typo3-cms-extension",
   "license": "GPL-2.0-or-later",
   "homepage": "https://bitmotion.de",
@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "typo3/cms-core": "^8.7 || ^9.1"
+    "typo3/cms-core": "^8.7"
   },
   "conflict": {
     "bitmotion/bm-custom-404-page": "*"
