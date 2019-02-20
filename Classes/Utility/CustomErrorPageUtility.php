@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Bitmotion\CustomErrorPage\Utility;
 
 /***************************************************************
@@ -33,7 +33,6 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Class CustomErrorPageUtility
- * @package Bitmotion\CustomErrorPage\Utility
  */
 class CustomErrorPageUtility
 {
@@ -51,12 +50,9 @@ class CustomErrorPageUtility
     /**
      * user func for page not found function
      *
-     * @param array $param
-     * @param TypoScriptFrontendController $ref
-     *
      * @throws \Exception
      */
-    public function showCustom404Page($param, $ref)
+    public function showCustom404Page(array $param, TypoScriptFrontendController $ref)
     {
         $pageType = $this->getErrorPageType($param);
 
@@ -74,23 +70,17 @@ class CustomErrorPageUtility
     /**
      * user func for page not found function
      *
-     * @param array $param
-     * @param TypoScriptFrontendController $ref
-     *
      * @throws \Exception
      */
-    public function showCustom503Page($param, $ref)
+    public function showCustom503Page(array $param, TypoScriptFrontendController $ref)
     {
         $this->showCustomErrorPage($param['currentUrl'], self::CODE_503);
     }
 
     /**
      * Get 403 or 404 error page type(status code) according to given fe_groups
-     *
-     * @param array $param
-     * @return int
      */
-    protected function getErrorPageType($param)
+    protected function getErrorPageType(array $param): int
     {
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
         $force404 = (bool)$extConf['force404'];
@@ -104,11 +94,8 @@ class CustomErrorPageUtility
 
     /**
      * Check if the given array of feGroups contains a valid fe_group
-     *
-     * @param array $feGroups
-     * @return bool
      */
-    protected function hasUserGroups($feGroups)
+    protected function hasUserGroups(array $feGroups): bool
     {
         foreach ($feGroups as $pageUid => $requiredUserGroup) {
             if (!empty($requiredUserGroup)) {
@@ -122,13 +109,9 @@ class CustomErrorPageUtility
     /**
      * Get a url of the error page specified by currentUrl and the pageType(status code)
      *
-     * @param string $currentUrl
-     * @param int $pageType
-     *
-     * @return string
      * @throws \Exception
      */
-    protected function getConfigurationErrorPage($currentUrl, $pageType)
+    protected function getConfigurationErrorPage(string $currentUrl, int $pageType): string
     {
         $configuration = ConfigurationUtility::loadConfiguration($pageType);
 
@@ -139,14 +122,10 @@ class CustomErrorPageUtility
      * This method checks if the current url matches any of the configured regular expressions and return the
      * corresponding page if so.
      *
-     * @param string $currentUrl
-     * @param array $configuration
-     * @param int $type
-     *
-     * @return mixed
      * @throws \Exception
+     * @return mixed
      */
-    private function findErrorPage($currentUrl, $configuration, $type = self::CODE_404)
+    private function findErrorPage(string $currentUrl, array $configuration, int $type = self::CODE_404): string
     {
         $arrayKey = $type . 'Handling';
         $hostName = GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
@@ -162,9 +141,9 @@ class CustomErrorPageUtility
             throw new \Exception('Could not find a "pageNotFound" that belongs to this hostname. Not even a default configuration.');
         }
 
-        foreach ($configurationAllocations as $regex => $pageUid) {
+        foreach ($configurationAllocations as $regex => $url) {
             if (preg_match($regex, $currentUrl)) {
-                return $pageUid;
+                return $url;
             }
         }
 
@@ -173,17 +152,14 @@ class CustomErrorPageUtility
     }
 
     /**
-     * @param string $currentUrl
-     * @param int $pageType
      * @throws \Exception
      */
-    private function showCustomErrorPage($currentUrl, $pageType)
+    private function showCustomErrorPage(string $currentUrl, int $pageType)
     {
         $originalRequestUserAgent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
 
         // if the current request contains our User-Agent, our extensions was called while trying to retrieve the 404 page => invalid configuration
         if (strpos($originalRequestUserAgent, 'TYPO3/' . $pageType . '-Handling') === false) {
-
             $originalRequestIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
             $report = [];
             $errorUrl = $this->getConfigurationErrorPage($currentUrl, $pageType);

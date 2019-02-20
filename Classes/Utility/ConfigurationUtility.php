@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Bitmotion\CustomErrorPage\Utility;
 
 /***************************************************************
@@ -31,7 +31,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ConfigurationUtility
- * @package Bitmotion\CustomErrorPage\Utility
  */
 class ConfigurationUtility
 {
@@ -43,12 +42,11 @@ class ConfigurationUtility
     }
 
     /**
-     * @param int $page
      * @throws \Exception
      *
      * @return array
      */
-    public static function loadConfiguration($page = 404)
+    public static function loadConfiguration(int $page = 404)
     {
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
 
@@ -65,13 +63,7 @@ class ConfigurationUtility
         return self::loadConfigurationFromYaml($fileName, $page);
     }
 
-    /**
-     * @param string $fileName
-     * @param int $page
-     *
-     * @return array
-     */
-    private static function loadConfigurationFromYaml($fileName, $page)
+    private static function loadConfigurationFromYaml(string $fileName, int $page): array
     {
         $yamlParser = new Yaml();
         $configuration = $yamlParser->parse(file_get_contents($fileName));
@@ -81,7 +73,6 @@ class ConfigurationUtility
         $arrayKey = $page . 'Handling';
 
         foreach ($configuration[$page] as $pageConfiguration) {
-
             $domain = $pageConfiguration['domain'];
             $protocol = $domain['https'] === true ? 'https' : 'http';
             $pageUid = $domain['pages'][$page];
@@ -122,8 +113,8 @@ class ConfigurationUtility
                     $isFirst = false;
                 }
             }
-
         }
+
         return $configurationArray;
     }
 }
