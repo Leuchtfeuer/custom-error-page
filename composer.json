@@ -12,7 +12,8 @@
     }
   ],
   "require": {
-    "typo3/cms-core": "^8.7"
+    "typo3/cms-core": "^8.7",
+    "symfony/yaml": "^3.0 || ^4.0"
   },
   "conflict": {
     "bitmotion/bm-custom-404-page": "*"
@@ -23,7 +24,7 @@
     }
   },
   "replace": {
-    "custom_error_page": "self.version",
+    "bitmotion/custom_error_page": "self.version",
     "typo3-ter/custom-error-page": "self.version"
   }
 }
