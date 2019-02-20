@@ -109,7 +109,7 @@ class ConfigurationUtility
                 $configurationArray[$domainName] = $domainConfiguration;
 
                 if ($isFirst === true) {
-                    $configuration['_DEFAULT'] = $domainConfiguration;
+                    $configurationArray['_DEFAULT'] = $domainConfiguration;
                     $isFirst = false;
                 }
             }
