@@ -52,18 +52,18 @@ class CustomErrorPageUtility
      *
      * @throws \Exception
      */
-    public function showCustom404Page(array $param, TypoScriptFrontendController $ref)
+    public function showCustom404Page(array $params, TypoScriptFrontendController $ref)
     {
-        $pageType = $this->getErrorPageType($param);
+        $pageType = $this->getErrorPageType($params);
 
         // TYPO3 handles 403 and 404 HTTP Requests in the same way and we want to separate them
         if ($pageType === self::CODE_403) {
-            $error403Url = $this->getConfigurationErrorPage($param['currentUrl'], $pageType);
+            $error403Url = $this->getConfigurationErrorPage($params['currentUrl'], $pageType);
 
             //Redirect user to the configured 403 page
-            HttpUtility::redirect($error403Url . '&redirect_url=' . urlencode($param['currentUrl']));
+            HttpUtility::redirect($error403Url . '&redirect_url=' . urlencode($params['currentUrl']));
         } else {
-            $this->showCustomErrorPage($param['currentUrl'], $pageType);
+            $this->showCustomErrorPage($params, $pageType);
         }
     }
 
@@ -72,21 +72,21 @@ class CustomErrorPageUtility
      *
      * @throws \Exception
      */
-    public function showCustom503Page(array $param, TypoScriptFrontendController $ref)
+    public function showCustom503Page(array $params, TypoScriptFrontendController $ref)
     {
-        $this->showCustomErrorPage($param['currentUrl'], self::CODE_503);
+        $this->showCustomErrorPage($params, self::CODE_503);
     }
 
     /**
      * Get 403 or 404 error page type(status code) according to given fe_groups
      */
-    protected function getErrorPageType(array $param): int
+    protected function getErrorPageType(array $params): int
     {
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['custom_error_page']);
         $force404 = (bool)$extConf['force404'];
 
-        if (!$force404 && isset($param['pageAccessFailureReasons']) && isset($param['pageAccessFailureReasons']['fe_group'])) {
-            return $this->hasUserGroups($param['pageAccessFailureReasons']['fe_group']) ? self::CODE_403 : self::CODE_404;
+        if (!$force404 && isset($params['pageAccessFailureReasons']) && isset($params['pageAccessFailureReasons']['fe_group'])) {
+            return $this->hasUserGroups($params['pageAccessFailureReasons']['fe_group']) ? self::CODE_403 : self::CODE_404;
         }
 
         return self::CODE_404;
@@ -111,11 +111,11 @@ class CustomErrorPageUtility
      *
      * @throws \Exception
      */
-    protected function getConfigurationErrorPage(string $currentUrl, int $pageType): string
+    protected function getConfigurationErrorPage(array $params, int $pageType): string
     {
         $configuration = ConfigurationUtility::loadConfiguration($pageType);
 
-        return $this->findErrorPage($currentUrl, $configuration, $pageType);
+        return $this->findErrorPage($params, $configuration, $pageType);
     }
 
     /**
@@ -125,7 +125,7 @@ class CustomErrorPageUtility
      * @throws \Exception
      * @return mixed
      */
-    private function findErrorPage(string $currentUrl, array $configuration, int $type = self::CODE_404): string
+    private function findErrorPage(array $params, array $configuration, int $type = self::CODE_404): string
     {
         $arrayKey = $type . 'Handling';
         $hostName = GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
@@ -142,7 +142,24 @@ class CustomErrorPageUtility
         }
 
         foreach ($configurationAllocations as $regex => $url) {
-            if (preg_match($regex, $currentUrl)) {
+            if (preg_match($regex, $params['currentUrl'])) {
+                $GLOBALS['TSFE']->id = $GLOBALS['TSFE']->domainStartPage;
+                $GLOBALS['TSFE']->getPageAndRootline();
+                $GLOBALS['TSFE']->initTemplate();
+                $GLOBALS['TSFE']->tmpl->start($GLOBALS['TSFE']->rootLine);
+                $GLOBALS['TSFE']->getConfigArray();
+                $GLOBALS['TSFE']->settingLanguage();
+                $GLOBALS['TSFE']->calculateLinkVars();
+
+                if ($GLOBALS['TSFE']->linkVars) {
+                    $url .= $GLOBALS['TSFE']->linkVars;
+                }
+
+                if ($configuration[$hostName]['forward-reason'] === true
+                    || $configuration['_DEFAULT']['forward-reason'] === true) {
+                    $url .= '&reason=' . urlencode($params['reasonText']);
+                }
+
                 return $url;
             }
         }
@@ -154,7 +171,7 @@ class CustomErrorPageUtility
     /**
      * @throws \Exception
      */
-    private function showCustomErrorPage(string $currentUrl, int $pageType)
+    private function showCustomErrorPage(array $params, int $pageType)
     {
         $originalRequestUserAgent = GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
 
@@ -162,12 +179,12 @@ class CustomErrorPageUtility
         if (strpos($originalRequestUserAgent, 'TYPO3/' . $pageType . '-Handling') === false) {
             $originalRequestIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
             $report = [];
-            $errorUrl = $this->getConfigurationErrorPage($currentUrl, $pageType);
+            $errorUrl = $this->getConfigurationErrorPage($params, $pageType);
 
             // Call the website. cURL is needed for this.
             $pageContent = GeneralUtility::getUrl($errorUrl, 0, [
                 'User-Agent: TYPO3/' . $pageType . '-Handling::' . $originalRequestIp . '::' . $originalRequestUserAgent,
-                'Referer: ' . $currentUrl,
+                'Referer: ' . $params['currentUrl'],
             ], $report);
 
             if ($pageContent === '' || !$pageContent) {
