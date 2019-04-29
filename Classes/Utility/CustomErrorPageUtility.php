@@ -161,8 +161,9 @@ class CustomErrorPageUtility
                     $this->logger->critical($message);
                 }
 
-                if ($configuration[$hostName]['forward-reason'] === true
-                    || $configuration['_DEFAULT']['forward-reason'] === true) {
+                if (!empty($params['reasonText'])
+                    && ($configuration[$hostName]['forward-reason'] === true
+                        || $configuration['_DEFAULT']['forward-reason'] === true)) {
                     $url .= '&reason=' . urlencode($params['reasonText']);
                 }
 
