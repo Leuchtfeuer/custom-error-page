@@ -156,7 +156,7 @@ class CustomErrorPageUtility
                         $url .= $GLOBALS['TSFE']->linkVars;
                     }
                 } catch (\Exception $e) {
-                    $message = 'Could not build a localized "pageNotFound" that belongs to this domaine. '
+                    $message = 'Could not build a localized "pageNotFound" that belongs to this domain. '
                         . "(pid: {$GLOBALS['TSFE']->domainStartPage})";
                     $this->logger->critical($message);
                 }
