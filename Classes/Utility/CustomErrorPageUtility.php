@@ -58,7 +58,7 @@ class CustomErrorPageUtility
 
         // TYPO3 handles 403 and 404 HTTP Requests in the same way and we want to separate them
         if ($pageType === self::CODE_403) {
-            $error403Url = $this->getConfigurationErrorPage($params['currentUrl'], $pageType);
+            $error403Url = $this->getConfigurationErrorPage($params, $pageType);
 
             //Redirect user to the configured 403 page
             HttpUtility::redirect($error403Url . '&redirect_url=' . urlencode($params['currentUrl']));
