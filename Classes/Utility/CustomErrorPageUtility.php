@@ -143,22 +143,24 @@ class CustomErrorPageUtility
 
         foreach ($configurationAllocations as $regex => $url) {
             if (preg_match($regex, $params['currentUrl'])) {
-                try {
-                    $GLOBALS['TSFE']->id = $GLOBALS['TSFE']->domainStartPage;
-                    $GLOBALS['TSFE']->getPageAndRootline();
-                    $GLOBALS['TSFE']->initTemplate();
-                    $GLOBALS['TSFE']->tmpl->start($GLOBALS['TSFE']->rootLine);
-                    $GLOBALS['TSFE']->getConfigArray();
-                    $GLOBALS['TSFE']->settingLanguage();
-                    $GLOBALS['TSFE']->calculateLinkVars();
+                if (empty(GeneralUtility::_GP('type'))) {
+                    try {
+                        $GLOBALS['TSFE']->id = $GLOBALS['TSFE']->domainStartPage;
+                        $GLOBALS['TSFE']->getPageAndRootline();
+                        $GLOBALS['TSFE']->initTemplate();
+                        $GLOBALS['TSFE']->tmpl->start($GLOBALS['TSFE']->rootLine);
+                        $GLOBALS['TSFE']->getConfigArray();
+                        $GLOBALS['TSFE']->settingLanguage();
+                        $GLOBALS['TSFE']->calculateLinkVars();
 
-                    if ($GLOBALS['TSFE']->linkVars) {
-                        $url .= $GLOBALS['TSFE']->linkVars;
+                        if ($GLOBALS['TSFE']->linkVars) {
+                            $url .= $GLOBALS['TSFE']->linkVars;
+                        }
+                    } catch (\Exception $e) {
+                        $message = 'Could not build a localized "pageNotFound" that belongs to this domain. '
+                                   . "(pid: {$GLOBALS['TSFE']->domainStartPage})";
+                        $this->logger->critical($message);
                     }
-                } catch (\Exception $e) {
-                    $message = 'Could not build a localized "pageNotFound" that belongs to this domain. '
-                        . "(pid: {$GLOBALS['TSFE']->domainStartPage})";
-                    $this->logger->critical($message);
                 }
 
                 if (!empty($params['reasonText'])
