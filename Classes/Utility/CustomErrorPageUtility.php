@@ -146,6 +146,7 @@ class CustomErrorPageUtility
                 if (empty(GeneralUtility::_GP('type'))) {
                     try {
                         $GLOBALS['TSFE']->id = $GLOBALS['TSFE']->domainStartPage;
+                        $GLOBALS['TSFE']->fetch_the_id();
                         $GLOBALS['TSFE']->getPageAndRootline();
                         $GLOBALS['TSFE']->initTemplate();
                         $GLOBALS['TSFE']->tmpl->start($GLOBALS['TSFE']->rootLine);
