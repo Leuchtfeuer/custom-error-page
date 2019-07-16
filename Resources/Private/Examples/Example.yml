@@ -14,6 +14,7 @@ configuration: &default
     - tld: .bar
     - tld: .foo.bar
   https: true
+  forward-reason: true
 
 
 404: &404

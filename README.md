@@ -41,6 +41,7 @@ configuration: &default
     - tld: .bar
     - tld: .foo.bar
   https: true
+  forward-reason: true
 
 
 404: &404
@@ -62,6 +63,7 @@ Contains the configuration array for handling 403, 404 or 503 errors. All keys c
 + <code>pages</code> (array): Contains configuration for pages
 + <code>additional-tlds</code> (array): Contains further TLD for configured domain
 + <code>language-pattern</code> (array): Contains configuration for different languages
++ <code>forward-reason</code> (bool): True if the reason must be forwarded to the error page
 
 #### pages
 The pages array does have to options:

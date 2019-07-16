@@ -91,6 +91,9 @@ class ConfigurationUtility
                     $arrayKey => [],
                 ];
 
+                // Forward the reason
+                $domainConfiguration['forward-reason'] = $domain['forward-reason'] === true ?: false;
+
                 foreach ($domain['language-pattern'] as $languageKey => $languageUid) {
                     if ($languageKey === 'default' && $languageUid == true) {
                         // Always prepend default configuration
