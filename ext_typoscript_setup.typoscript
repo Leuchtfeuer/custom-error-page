@@ -1,0 +1,7 @@
+# Rendering of content elements in show view
+lib.tx_customerrorpage.contentElementRendering = RECORDS
+lib.tx_customerrorpage.contentElementRendering {
+  tables = tt_content
+  source.current = 1
+  dontCheckPid = 1
+}

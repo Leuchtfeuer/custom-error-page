@@ -1,0 +1,10 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:cObject typoscriptObjectPath="lib.tx_customerrorpage.contentElementRendering">{contentElements}</f:cObject>
+
+<f:if condition="{refererQueryParameter}">
+	<f:link.typolink parameter="{refererQueryParameter}" additionalParams="{refererQueryAdditionalParams}">
+		<f:translate key="tx_custom_error_page_pi1.fallbackUrlTitle"/>
+	</f:link.typolink>
+</f:if>
+</html>

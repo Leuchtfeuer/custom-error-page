@@ -2,20 +2,22 @@ This version of the custom_error_page can only be used by >= TYPO3 8 LTS instanc
 
 ## How to use
 
-There are up to three steps to take:
+There are up to four steps to take:
 
 - Set up the YAML with all your domains for each page root tree and their pids to their specific 403/404/503 page. An example
   file is in the folder "Examples" of this extension. The default file destination is "typo3conf/custom_error_conf.yml".
 
 - Change the value of [FE][pageNotFound_handling] to "USER_FUNCTION:Bitmotion\CustomErrorPage\Utility\CustomErrorPageUtility->showCustom404Page" (without "")
 - Change the value of [FE][pageUnavailable_handling] to "USER_FUNCTION:Bitmotion\CustomErrorPage\Utility\CustomErrorPageUtility->showCustom503Page" (without "")
-
+ 
 There is a configuration example in <code>Resources/Private/Examples</code>.
+
+- Optional: Add the "Error message handling" plugin on each 404 error pages instead of a simple content elements.
 
 
 ## Extension Configuration
 
-There are to configuration options.
+There are two configuration options.
 
 * <code>basic.path</code> (string): Path to the YAML file containing the configuration (see: below).
 * <code>basic.force404</code> (bool): If set, the configured 404 page will shown on 403 errors.
@@ -98,3 +100,17 @@ If there is a sys_language_uid which is not configured in one of the given patte
 
 + <code>ISO-Code</code> (int): Generic key and value (see above)
 + <code>default</code> (bool): see above
+
+## Plugin Configuration
+
+The plugin let you define custom error message depending of the 404 error reason.
+In fact, error messages are content elements so you will be able to reuse them.
+
+Currently there are two types of 404 error:
+
+- Page is not found (really)
+- Page is not translated (A link to the default language will be provided)
+
+First, create all the content elements you want to display on your 404 page in a storage folder.
+Then add the "Error message handling" plugin on your 404 page and add the content elements to the appropriate section.
+That's all! ;)

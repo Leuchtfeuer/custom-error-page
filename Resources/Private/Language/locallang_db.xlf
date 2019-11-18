@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-09T10:21:41Z" product-name="custom_error_page">
+		<header/>
+		<body>
+			<trans-unit id="tx_custom_error_page_pi1.name">
+				<source>Error message handling</source>
+			</trans-unit>
+			<trans-unit id="tx_custom_error_page_pi1.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_custom_error_page_pi1.contentElements">
+				<source>Content elements</source>
+			</trans-unit>
+			<trans-unit id="tx_custom_error_page_pi1.pageNotFound">
+				<source>Page not found</source>
+			</trans-unit>
+			<trans-unit id="tx_custom_error_page_pi1.pageNotTranslated">
+				<source>Page not translated</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

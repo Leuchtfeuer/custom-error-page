@@ -143,7 +143,7 @@ class CustomErrorPageUtility
 
         foreach ($configurationAllocations as $regex => $url) {
             if (preg_match($regex, $params['currentUrl'])) {
-                if (empty(GeneralUtility::_GP('type'))) {
+                if (empty(GeneralUtility::_GP('type')) && !empty($GLOBALS['TSFE']->domainStartPage)) {
                     try {
                         $GLOBALS['TSFE']->id = $GLOBALS['TSFE']->domainStartPage;
                         $GLOBALS['TSFE']->fetch_the_id();

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-09T10:21:41Z" product-name="custom_error_page">
+		<header/>
+		<body>
+			<trans-unit id="tx_custom_error_page_pi1.fallbackUrlTitle">
+				<source>You may consult the original version of the page.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
