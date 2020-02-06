@@ -17,7 +17,9 @@ $EM_CONF[$_EXTKEY] = [
             'typo3' => '8.7.0-8.7.99',
         ],
         'conflicts' => [],
-        'suggests' => [],
+        'suggests' => [
+            'realurl'=> '2.0.0-2.9.99',
+        ],
     ],
     'autoload' => [
         'psr-4' => [
