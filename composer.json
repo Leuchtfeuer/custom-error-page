@@ -14,9 +14,15 @@
     {
       "name": "Bitmotion GmbH",
       "email": "typo3-ext@bitmotion.de",
+      "role": "Developer",
       "homepage": "https://bitmotion.de/"
     }
   ],
+  "support": {
+    "issues": "https://github.com/bitmotion/custom-error-page/issues",
+    "source": "https://github.com/bitmotion/custom-error-page",
+    "email": "typo3-ext@bitmotion.de"
+  },
   "require": {
     "typo3/cms-core": "^8.7",
     "symfony/yaml": "^3.0 || ^4.0"
