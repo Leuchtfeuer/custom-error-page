@@ -48,8 +48,8 @@ class TypoScriptFrontendController extends TyposcriptFrontendControllerBase
         // Call post processing function for custom URL methods.
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['checkAlternativeIdMethods-PostProc'])) {
             $_params = ['pObj' => &$this];
-            foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['checkAlternativeIdMethods-PostProc']
-                     as $_funcRef) {
+            $postProc = $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['checkAlternativeIdMethods-PostProc'];
+            foreach ($postProc as $_funcRef) {
                 GeneralUtility::callUserFunction($_funcRef, $_params, $this);
             }
         }
