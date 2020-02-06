@@ -39,7 +39,7 @@ call_user_func(
         $iconRegistry->registerIcon(
             'custom_error_page-plugin-pi1',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:custom_error_page/Resources/Public/Icons/Pi1.svg']
+            ['source' => 'EXT:custom_error_page/Resources/Public/Icons/Extension.svg']
         );
 
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
