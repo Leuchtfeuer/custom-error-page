@@ -3,10 +3,6 @@ defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
     function () {
-        if (!defined('TYPO3_COMPOSER_MODE') || !TYPO3_COMPOSER_MODE) {
-            require \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('custom_error_page') . 'Libraries/vendor/autoload.php';
-        }
-
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Bitmotion.CustomErrorPage',
             'Pi1',
