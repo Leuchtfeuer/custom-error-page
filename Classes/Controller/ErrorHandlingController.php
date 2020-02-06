@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Bitmotion\CustomErrorPage\Controller;
 
@@ -33,9 +33,8 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * Class ErrorHandlingController
  *
- * @package Bitmotion\CustomErrorPage\Controller
+ * Class ErrorHandlingController
  */
 class ErrorHandlingController extends ActionController
 {
@@ -76,8 +75,10 @@ class ErrorHandlingController extends ActionController
                 }
 
                 $refererQueryArray  = array_merge($refererQueryArray, GeneralUtility::_GET());
-                $refererQueryArray  = ArrayUtility::arrayDiffAssocRecursive($refererQueryArray,
-                                                                            ['id' => 0, 'L' => 0, 'reason' => 0]);
+                $refererQueryArray  = ArrayUtility::arrayDiffAssocRecursive(
+                    $refererQueryArray,
+                    ['id' => 0, 'L' => 0, 'reason' => 0]
+                );
                 $refererQueryParams = GeneralUtility::implodeArrayForUrl('', $refererQueryArray, '', false, true);
 
                 $this->view->assignMultiple([

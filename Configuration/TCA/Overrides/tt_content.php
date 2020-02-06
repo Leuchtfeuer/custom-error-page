@@ -8,16 +8,14 @@ call_user_func(function () {
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'recursive,pages';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature]     = 'pi_flexform';
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature,
-                                                                           'FILE:EXT:custom_error_page/Configuration/FlexForms/Pi1.xml');
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        $pluginSignature,
+        'FILE:EXT:custom_error_page/Configuration/FlexForms/Pi1.xml'
+    );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'Bitmotion.CustomErrorPage',
         'Pi1',
         'Error message handling'
     );
-
 });
-
-
-

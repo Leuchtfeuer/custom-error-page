@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Bitmotion\CustomErrorPage\Utility\Decoder;
 
@@ -29,13 +29,10 @@ namespace Bitmotion\CustomErrorPage\Utility\Decoder;
 
 use DmitryDulepov\Realurl\Decoder\UrlDecoder as UrlDecoderBase;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * This class contains URL decoder for the RealURL. It is singleton because the
  * same instance must run in two different hooks.
- *
- * @package Bitmotion\CustomErrorPage\Utility\Decoder
  */
 class UrlDecoder extends UrlDecoderBase implements SingletonInterface
 {
@@ -44,8 +41,6 @@ class UrlDecoder extends UrlDecoderBase implements SingletonInterface
      * \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::checkAlternativeIdMethods()
      *
      * @param array                        $params
-     *
-     * @return void
      */
     public function decode(array $params)
     {
